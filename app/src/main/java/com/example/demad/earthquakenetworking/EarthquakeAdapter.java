@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -44,9 +45,14 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         /*Find the earthquake at a given position*/
         Earthquake currentEarthquake = getItem(position);
         //        Find the TextView with the ID magnitude.
-        TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude);
-        magnitudeTextView.setText(currentEarthquake.getMagnitude());
-        //        Find the TextView with the ID location.
+        TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
+        // / Format the magnitude to show 1 decimal place
+        /**
+         * Using the Helper method
+         * */
+        String formattedMagnitude = formatMagnitude(currentEarthquake.getMagnitude());
+        // Display the magnitude of the current earthquake in that TextView
+        magnitudeView.setText(formattedMagnitude);
         // Create a new Date object from the time in milliseconds of the earthquake
         Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
         // Find the TextView with view ID date
@@ -104,8 +110,18 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         // Return the list item view that is now showing the appropriate data
         return listItemView;
     }
+
     /**
-     * Date String  HELPER METHODS
+     * Magnitude HELPER METHOD
+     * Return the formatted magnitude string showing 1 decimal place (i.e. "3.2")
+     * from a decimal magnitude value.
+     */
+    private String formatMagnitude(double magnitude) {
+        DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
+        return magnitudeFormat.format(magnitude);
+    }
+    /**
+     *  Date String  HELPER METHODS
      * */
     /**
      * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.

@@ -2,24 +2,24 @@ package com.example.demad.earthquakenetworking;
 
 public class Earthquake {
     /*Magnitude of the earthquake*/
-    private String mMagnitude;
+    private double mMagnitude;
     /*Location of the earthquake*/
     private String mLocation;
     /*Date of the earthquake*/
     private String mDate;
     /*Time of the earthquake*/
-    private Long mTimeInMilliseconds;
+    private long mTimeInMilliseconds;
 
     /*Create a new Earthquake object*/
 
-    public Earthquake(String magnitude, String location, Long timeInMilliseconds) {
+    public Earthquake(double magnitude, String location, long timeInMilliseconds) {
         mMagnitude = magnitude;
         mLocation = location;
         mTimeInMilliseconds = timeInMilliseconds;
     }
 
     /*Returns the magnitude of the earthquake*/
-    public String getMagnitude() {
+    public double getMagnitude() {
         return mMagnitude;
     }
 
@@ -35,7 +35,7 @@ public class Earthquake {
 
     /*Returns the time of the earthquake*/
 
-    public Long getTimeInMilliseconds() {
+    public long getTimeInMilliseconds() {
         return mTimeInMilliseconds;
     }
 }
