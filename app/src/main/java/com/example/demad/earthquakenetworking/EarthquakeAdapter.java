@@ -1,10 +1,7 @@
 package com.example.demad.earthquakenetworking;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +13,18 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+/**
+ * An {@link EarthquakeAdapter} knows how to create a list item layout for each earthquake
+ * <p>
+ * in the data source (a list of {@link Earthquake} objects).
+ * <p>
+ * <p>
+ * <p>
+ * These list item layouts will be provided to an adapter view like ListView
+ * <p>
+ * to be displayed to the user.
+ */
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
-    /**
-     * Constructs a new {@link EarthquakeAdapter}.
-     *
-     * @param context     of the App
-     * @param earthquakes is the list of earthquakes, which is the data source of the adapter
-     */
-    public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
-        super(context, 0, earthquakes);
-    }
-
     /**
      * The part of the location string from the USGS service that we use to determine
      * <p>
@@ -35,43 +33,44 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private static final String LOCATION_SEPARATOR = " of ";
 
     /**
-     * Returns a list of new item view that displays information about the earthquake
-     * <p>
-     * in the the list of earthquakes.
+     * Constructs a new {@link EarthquakeAdapter}.
+     *
+     * @param context     of the app
+     * @param earthquakes is the list of earthquakes, which is the data source of the adapter
      */
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        @SuppressLint("ViewHolder") View listItemView = LayoutInflater.from(getContext()).inflate(R.layout.earthquake_list_item, parent, false);
+    public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
+        super(context, 0, earthquakes);
+    }
 
-        /*Find the earthquake at a given position*/
+    /**
+     * Returns a list item view that displays information about the earthquake at the given position
+     * <p>
+     * in the list of earthquakes.
+     */
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Check if there is an existing list item view (called convertView) that we can reuse,
+        // otherwise, if convertView is null, then inflate a new list item layout.
+        View listItemView = convertView;
+        if (listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(
+                    R.layout.earthquake_list_item, parent, false);
+        }
+        // Find the earthquake at the given position in the list of earthquakes
         Earthquake currentEarthquake = getItem(position);
-        //        Find the TextView with the ID magnitude.
+        // Find the TextView with view ID magnitude
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
-        // / Format the magnitude to show 1 decimal place
-        /**
-         * Using the Helper method
-         * */
+        // Format the magnitude to show 1 decimal place
         String formattedMagnitude = formatMagnitude(currentEarthquake.getMagnitude());
         // Display the magnitude of the current earthquake in that TextView
         magnitudeView.setText(formattedMagnitude);
         // Set the proper background color on the magnitude circle.
-        /**
-         * Using the get magnitudeColor helper method
-         * */
         // Fetch the background from the TextView, which is a GradientDrawable.
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
         // Get the appropriate background color based on the current earthquake magnitude
         int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
         // Set the color on the magnitude circle
         magnitudeCircle.setColor(magnitudeColor);
-        // Create a new Date object from the time in milliseconds of the earthquake
-        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
-        // Find the TextView with view ID date
-        TextView dateView = (TextView) listItemView.findViewById(R.id.date);
-        /**
-         * String location split(String string)
-         * */
         // Get the original location string from the Earthquake object,
         // which can be in the format of "5km N of Cairo, Egypt" or "Pacific-Antarctic Ridge".
         String originalLocation = currentEarthquake.getLocation();
@@ -106,9 +105,10 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         TextView locationOffsetView = (TextView) listItemView.findViewById(R.id.location_offset);
         // Display the location offset of the current earthquake in that TextView
         locationOffsetView.setText(locationOffset);
-        /**
-         * String date using the below Helper Methods
-         * */
+        // Create a new Date object from the time in milliseconds of the earthquake
+        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
+        // Find the TextView with view ID date
+        TextView dateView = (TextView) listItemView.findViewById(R.id.date);
         // Format the date string (i.e. "Mar 3, 1984")
         String formattedDate = formatDate(dateObject);
         // Display the date of the current earthquake in that TextView
@@ -124,7 +124,6 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     }
 
     /**
-     * Get MagnitudeColor HELPER
      * Return the color for the magnitude circle based on the intensity of the earthquake.
      *
      * @param magnitude of the earthquake
@@ -169,17 +168,15 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     }
 
     /**
-     * Magnitude: Using the formatMagnitude HELPER METHOD
      * Return the formatted magnitude string showing 1 decimal place (i.e. "3.2")
+     * <p>
      * from a decimal magnitude value.
      */
     private String formatMagnitude(double magnitude) {
         DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
         return magnitudeFormat.format(magnitude);
     }
-    /**
-     *  Date String  HELPER METHODS
-     * */
+
     /**
      * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.
      */
