@@ -7,8 +7,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import java.util.prefs.PreferenceChangeListener;
 public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,10 +14,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
     }
 
-    public static class EarthquakePreferenceFragment extends PreferenceFragment
-            /**
-             * Setup OnPreferenceChangeListener interface to show the preference
-             * */
+    public static class EarthquakePreferenceFragment
+            extends PreferenceFragment
+            //Setup OnPreferenceChangeListener interface to show the preference
             implements Preference.OnPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {

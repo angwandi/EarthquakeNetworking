@@ -17,7 +17,8 @@
     android:gravity="center"
     android:textColor="@android:color/white"
     android:textSize="16sp"
-    tools:text="8.9" />
+    tools:text="8.9"
+    tools:targetApi="jelly_bean" />
 
   <LinearLayout
     android:layout_width="0dp"
@@ -38,7 +39,8 @@
       android:textAllCaps="true"
       android:textColor="@color/textColorEarthquakeDetails"
       android:textSize="12sp"
-      tools:text="30km S of" />
+      tools:text="30km S of"
+      tools:targetApi="jelly_bean" />
 
     <TextView
       android:id="@+id/primary_location"

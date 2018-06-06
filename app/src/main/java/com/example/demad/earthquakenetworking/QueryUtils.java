@@ -51,9 +51,8 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        List<Earthquake> earthquakes = extractFeatureFromJson(jsonResponse);
         // Return the list of {@link Earthquake}s
-        return earthquakes;
+        return extractFeatureFromJson(jsonResponse);
     }
 
     /**
@@ -158,8 +157,7 @@ public final class QueryUtils {
                 // key called "properties", which represents a list of all properties
                 // for that earthquake.
                 JSONObject properties = currentEarthquake.getJSONObject("properties");
-                // Extract the value for the key called "mag"
-                double magnitude = properties.getDouble("mag");
+                 double magnitude = properties.getDouble("mag");
                 // Extract the value for the key called "place"
                 String location = properties.getString("place");
                 // Extract the value for the key called "time"
